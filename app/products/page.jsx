@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../Store/ProductsSlice";
 import Header from "../components/Header"
-import StatsCards from "../components/StatsCards";
 import ProductsTable from "../components/ProductsTable";
 import SearchBar from "../components/SearchBar";
 
@@ -58,8 +57,6 @@ export default function ProductsPage() {
           placeholder="Search products..." 
         />
       </Header>
-
-      <StatsCards products={products} />
 
       <ProductsTable 
         products={filteredProducts} 

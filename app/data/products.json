@@ -44,6 +44,23 @@
       "quantity": 8,
       "status": "in_stock",
       "description": "Soluta cupiditate se"
+    },
+    {
+      "id": "7076",
+      "name": "Jade Jacobs",
+      "category": "Illo perferendis qui",
+      "price": 651,
+      "quantity": 147,
+      "status": "out_of_stock",
+      "description": "Mollit nemo praesent"
     }
-  ]
+  ],
+
+  "Sales":[
+  { "id": 1, "product": "Laptop", "category": "Electronics", "quantity": 5, "price": 1200, "date": "2026-01-15" },
+  { "id": 2, "product": "T-Shirt", "category": "Clothes", "quantity": 10, "price": 25, "date": "2026-01-14" },
+  { "id": 3, "product": "Basketball", "category": "Sports", "quantity": 7, "price": 50, "date": "2026-01-12" },
+  { "id": 4, "product": "Book", "category": "Books", "quantity": 15, "price": 15, "date": "2026-01-10" }
+]
+
 }

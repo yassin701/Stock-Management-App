@@ -1,12 +1,11 @@
-import Image from "next/image";
 import StatsCards from "./components/StatsCards";
-export default function Home() {
+import SalesByProductChart from "./components/SalesByProductChart";
+
+export default function DashboardPage() {
   return (
-  <>
-   <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p>Welcome to the dashboard</p>
-     
-  </>
-  
+    <div className="p-6 space-y-6">
+      <StatsCards />
+      <SalesByProductChart/>
+    </div>
   );
 }
