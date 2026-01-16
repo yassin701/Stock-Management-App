@@ -45,7 +45,7 @@ export default function ProductsPage() {
         subtitle={`Manage your inventory (${filteredProducts.length} products)`}
         actionButton={
           <a 
-            href="/products/new" 
+            href="/new" 
             className="bg-blue-600 text-white px-4 py-2 rounded-lg"
           >
             + Add Product

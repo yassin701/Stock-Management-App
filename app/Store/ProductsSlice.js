@@ -32,7 +32,7 @@ export const addProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (id) => {
-    await API.delete(`/products/$pro.id`);
+    await API.delete(`/products/${id}`);
     return id; // returns the deleted product id
   }
 );

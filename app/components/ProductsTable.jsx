@@ -5,101 +5,75 @@ import Link from "next/link";
 import { FiEye, FiEdit, FiTrash2 } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { deleteProduct, updateProduct } from "../Store/ProductsSlice";
-
 import DeleteProductModal from "../components/DeleteProductModal";
 import EditProductModal from "../components/EditProductModal";
 
 export default function ProductsTable({ products, totalProducts }) {
   const dispatch = useDispatch();
-
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
 
   const getStatusColor = (status) => {
-    const colors = {
-      in_stock: "bg-green-100 text-green-800",
-      low_stock: "bg-orange-100 text-orange-800",
-      out_of_stock: "bg-red-100 text-red-800",
-    };
-    return colors[status] || "bg-gray-100 text-gray-800";
+    if (status === "in_stock") return "bg-green-100 text-green-800";
+    if (status === "low_stock") return "bg-yellow-100 text-yellow-800";
+    if (status === "out_of_stock") return "bg-red-100 text-red-800";
+    return "bg-gray-100 text-gray-800";
   };
 
   return (
     <>
-      <div className="bg-white rounded border overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Category</th>
-              <th className="p-3 text-left">Price</th>
-              <th className="p-3 text-left">Quantity</th>
-              <th className="p-3 text-left">Status</th>
-              <th className="p-3 text-left">Actions</th>
-            </tr>
-          </thead>
+      <div className="space-y-4">
+        {products.map((product) => (
+          <div key={product.id} className="bg-white p-4 rounded-lg border flex justify-between items-center">
+            
+            <div>
+              <div className="font-medium">{product.name}</div>
+              <div className="text-sm text-gray-500">{product.category}</div>
+            </div>
 
-          <tbody>
-            {products.map((product) => (
-              <tr key={product.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">
-                  <div className="font-medium">{product.name}</div>
-                  <div className="text-sm text-gray-500">ID #{product.id}</div>
-                </td>
+            <div className="text-center">
+              <div className="font-bold">${product.price.toFixed(2)}</div>
+              <div className="text-sm text-gray-500">Price</div>
+            </div>
 
-                <td className="p-3">{product.category}</td>
-                <td className="p-3 font-semibold">
-                  ${product.price.toFixed(2)}
-                </td>
-                <td className="p-3">{product.quantity}</td>
+            <div className="text-center">
+              <div className="font-bold">{product.quantity}</div>
+              <div className="text-sm text-gray-500">Stock</div>
+            </div>
 
-                <td className="p-3">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${getStatusColor(
-                      product.status
-                    )}`}
-                  >
-                    {product.status.replace("_", " ")}
-                  </span>
-                </td>
+            <div>
+              <span className={`px-3 py-1 rounded-full text-sm ${getStatusColor(product.status)}`}>
+                {product.status.replace("_", " ")}
+              </span>
+            </div>
 
-                <td className="p-3 flex gap-3">
-                  <Link href={`/products/${product.id}`}>
-                    <FiEye className="text-blue-500 cursor-pointer" />
-                  </Link>
+            <div className="flex gap-3">
+              <Link href={`/products/${product.id}`}>
+                <FiEye className="text-blue-500" />
+              </Link>
+              <button onClick={() => { setSelectedProduct(product); setShowEdit(true); }}>
+                <FiEdit className="text-orange-500" />
+              </button>
+              <button onClick={() => { setSelectedProduct(product); setShowDelete(true); }}>
+                <FiTrash2 className="text-red-500" />
+              </button>
+            </div>
 
-                  <FiEdit
-                    className="text-orange-500 cursor-pointer"
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setShowEdit(true);
-                    }}
-                  />
-
-                  <FiTrash2
-                    className="text-red-500 cursor-pointer"
-                    onClick={() => {
-                      setSelectedProduct(product);
-                      setShowDelete(true);
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {products.length === 0 ? (
-          <div className="p-8 text-center text-gray-500">
-            No products found
           </div>
-        ) : (
-          <div className="p-3 bg-gray-50 border-t text-sm text-gray-600">
-            Showing {products.length} of {totalProducts} products
-          </div>
-        )}
+        ))}
       </div>
+
+      {products.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          No products found
+        </div>
+      )}
+
+      <div className="mt-4 text-sm text-gray-600">
+        Showing {products.length} of {totalProducts} products
+      </div>
+
 
       {/* DELETE MODAL */}
       {showDelete && selectedProduct && (
@@ -134,6 +108,6 @@ export default function ProductsTable({ products, totalProducts }) {
           }}
         />
       )}
-    </>
+     </>
   );
 }
