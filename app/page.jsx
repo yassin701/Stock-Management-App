@@ -9,13 +9,15 @@ import SalesTable from "./components/SalesTable";
 
 export default function DashboardPage() {
   return (
-    <div className="p-6 ">
+    <div className="p-6 space-y-6">
       <StatsCards />
       <SalesDashboard>
       <SalesByProductChart/>
-      <AiSalesInsight/> 
-      </SalesDashboard>
-      <SalesTable />
+      <AiSalesInsight/>
+ 
+</SalesDashboard>
+<SalesTable/>
+
     </div>
   );
 }

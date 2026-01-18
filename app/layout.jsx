@@ -1,20 +1,26 @@
-"use client"; // IMPORTANT: must be at the top
+// app/layout.jsx
+import "./globals.css";
+import Sidebar from "./components/Sidebar";
+import Providers from "./components/Providers";
 
-import './globals.css';
-import Sidebar from './components/Sidebar';
-import { Provider } from 'react-redux';
-import { store } from './Store/store'; // make sure this path is correct
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className='flex'>
-        <Provider store={store}>
+      <body className="flex ">
+        <Providers>
           <Sidebar />
-          <main className="ml-64 w-full min-h-screen p-6">
+          <main
+            className="
+              w-full min-h-screen p-6
+              pt-20 md:pt-6
+              md:ml-64
+              transition-all duration-300
+            "
+          >
             {children}
           </main>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

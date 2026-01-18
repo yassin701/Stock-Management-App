@@ -62,11 +62,29 @@
       "quantity": 59,
       "status": "out_of_stock",
       "description": "Amet deserunt commo"
+    },
+    {
+      "id": "8cb7",
+      "name": "Veronica Boyer",
+      "category": "Laboris eaque volupt",
+      "price": 393,
+      "quantity": 549,
+      "status": "out_of_stock",
+      "description": "Minima voluptate qui"
+    },
+    {
+      "id": "7ce5",
+      "name": "Todd Harrington",
+      "category": "Sunt autem magnam e",
+      "price": 654,
+      "quantity": 137,
+      "status": "low_stock",
+      "description": "Nam dolores ad omnis"
     }
   ],
   "Sales": [
     {
-      "id": 1,
+      "id": "1",
       "product": "Laptop",
       "category": "Electronics",
       "quantity": 5,
@@ -74,7 +92,7 @@
       "date": "2026-01-15"
     },
     {
-      "id": 2,
+      "id": "2",
       "product": "T-Shirt",
       "category": "Clothes",
       "quantity": 10,
@@ -82,7 +100,7 @@
       "date": "2026-01-14"
     },
     {
-      "id": 3,
+      "id": "3",
       "product": "Basketball",
       "category": "Sports",
       "quantity": 7,
@@ -90,7 +108,7 @@
       "date": "2026-01-12"
     },
     {
-      "id": 4,
+      "id": "4",
       "product": "Book",
       "category": "Books",
       "quantity": 15,

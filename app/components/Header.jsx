@@ -1,3 +1,6 @@
+"use client";
+
+
 export default function Header({ title, subtitle, children, actionButton }) {
   return (
     <div className="flex justify-between items-center mb-8">
