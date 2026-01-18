@@ -56,7 +56,7 @@ export default function SalesByProductChart() {
             />
             <Bar 
               dataKey="quantity" 
-              fill="#6366f1"
+              fill="#baccc7"
               radius={[4, 4, 0, 0]}
             />
           </BarChart>

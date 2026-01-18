@@ -6,7 +6,7 @@ import AiSalesInsight from "./AiSalesInsight";
 
 export default function SalesDashboard() {
   return (
-    <div className="min-h-screen  p-4 md:p-6">
+    <div className="p-4 md:p-6">
       {/* Header */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">
