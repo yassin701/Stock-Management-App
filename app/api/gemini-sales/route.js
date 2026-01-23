@@ -10,19 +10,18 @@ export async function POST(req) {
 
     // 2. Use the "latest" alias to avoid version-specific 404s
     const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+const prompt = `
+Analyze this sales data: ${JSON.stringify(sales)}.
 
-    const prompt = `
-  You are a concise business analyst. 
-  Analyze this sales data: ${JSON.stringify(sales)}
+Return short bullet points:
+- Total revenue
+- Best-selling product (BY QUANTITY SOLD)
+- One business tip
 
-  Provide a VERY SHORT summary (max 4-5 sentences). 
-  Include ONLY:
-  - Total Revenue
-  - Best selling product
-  - One key business tip.
-  
-  Use simple bullet points. No long paragraphs.
+Max 4–5 lines. No paragraphs.
 `;
+
+
 
     const result = await model.generateContent(prompt);
     const text = result.response.text();

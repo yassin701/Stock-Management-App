@@ -1,69 +1,68 @@
-// store/productsSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import API from "../Services/axios"; // make sure folder is lowercase
+import API from "../Services/axios";
+import localData from "../../db.json";
 
-// 1️ Fetch all products
+/* ======================
+   THUNKS
+====================== */
 
+// FETCH PRODUCTS
 export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
+  "products/fetch",
   async () => {
-    const response = await API.get("/products");
-    return response.data; // returns an array of products
+    try {
+      const res = await API.get("/products");
+      return res.data;
+    } catch (error) {
+      // fallback to local db.json
+      console.warn("API failed, loading local data");
+      return localData.products;
+    }
   }
 );
 
-
-
-
-
-// 2️ Add a product
-
+// ADD PRODUCT
 export const addProduct = createAsyncThunk(
-  "products/addProduct",
+  "products/add",
   async (product) => {
-    const response = await API.post("/products", product);
-    return response.data; // returns the added product
+    const res = await API.post("/products", product);
+    return res.data;
   }
 );
 
-
-// 3️ Delete a product
-
-export const deleteProduct = createAsyncThunk(
-  "products/deleteProduct",
-  async (id) => {
-    await API.delete(`/products/${id}`);
-    return id; // returns the deleted product id
-  }
-);
-
-
-//4 Put a product 
-
+// UPDATE PRODUCT
 export const updateProduct = createAsyncThunk(
-  "products/updateProduct",
+  "products/update",
   async (product) => {
     const res = await API.put(`/products/${product.id}`, product);
-    return res.data; // updated product
+    return res.data;
   }
 );
 
+// DELETE PRODUCT
+export const deleteProduct = createAsyncThunk(
+  "products/delete",
+  async (id) => {
+    await API.delete(`/products/${id}`);
+    return id;
+  }
+);
 
+/* ======================
+        SLICE
+====================== */
 
-// ==========================
-// Slice
-// ==========================
 const productsSlice = createSlice({
   name: "products",
   initialState: {
-    items: [],       // array of all products
-    status: "idle",  // "idle" | "loading" | "succeeded" | "failed"
-    error: null,     // error message if any
+    items: [],
+    status: "idle",
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // -------- FETCH PRODUCTS --------
+      // FETCH
       .addCase(fetchProducts.pending, (state) => {
         state.status = "loading";
       })
@@ -76,27 +75,24 @@ const productsSlice = createSlice({
         state.error = action.error.message;
       })
 
-      // -------- ADD PRODUCT --------
+      // ADD
       .addCase(addProduct.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
 
-
-      //--------- Put Product --------------
+      // UPDATE
       .addCase(updateProduct.fulfilled, (state, action) => {
         const index = state.items.findIndex(
           (p) => p.id === action.payload.id
         );
-
-        if (index !== -1) {
-          state.items[index] = action.payload;
-        }
+        if (index !== -1) state.items[index] = action.payload;
       })
 
-
-      // -------- DELETE PRODUCT --------
+      // DELETE
       .addCase(deleteProduct.fulfilled, (state, action) => {
-        state.items = state.items.filter((product) => product.id !== action.payload);
+        state.items = state.items.filter(
+          (p) => p.id !== action.payload
+        );
       });
   },
 });

@@ -30,11 +30,15 @@ export default function ProductDetailsPage() {
   }
 
   const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'in_stock': return 'bg-green-100 text-green-800';
-      case 'low_stock': return 'bg-yellow-100 text-yellow-800';
-      case 'out_of_stock': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+    switch ((status || "").toLowerCase()) {
+      case 'in_stock':
+        return 'bg-green-100 text-green-800';
+      case 'low_stock':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'out_of_stock':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -76,7 +80,7 @@ export default function ProductDetailsPage() {
             </h1>
             <div className="flex items-center gap-3">
               <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
-                {product.status.replace("_", " ")}
+                {(product.status || "").replace("_", " ")}
               </span>
               <span className="text-sm text-gray-500">
                 ID: {product.id}

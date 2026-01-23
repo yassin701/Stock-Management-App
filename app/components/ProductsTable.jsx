@@ -48,7 +48,7 @@ export default function ProductsTable({ products, totalProducts }) {
               </div>
               
               <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
-                {product.status.replace("_", " ")}
+                {(product.status || "").replace("_", " ")}
               </span>
             </div>
 
@@ -116,7 +116,7 @@ export default function ProductsTable({ products, totalProducts }) {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
-                      {product.status.replace("_", " ")}
+                      {(product.status || "").replace("_", " ")}
                     </span>
                   </td>
                   <td className="px-6 py-4">

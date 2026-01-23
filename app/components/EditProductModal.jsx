@@ -17,7 +17,7 @@ export default function EditProductModal({ isOpen, onClose, onSave, product }) {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: name === "price" || name === "quantity" ? Number(value) : value,
+      [name]: name === "price" || name === "quantity" || name === "sold" ? Number(value) : value,
     });
   };
 
@@ -88,6 +88,18 @@ export default function EditProductModal({ isOpen, onClose, onSave, product }) {
                   required
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-gray-700 text-sm mb-1">Sold</label>
+              <input
+                type="number"
+                name="sold"
+                value={formData.sold || 0}
+                onChange={handleChange}
+                min="0"
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div>

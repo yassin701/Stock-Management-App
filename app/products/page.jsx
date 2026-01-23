@@ -19,6 +19,7 @@ export default function ProductsPage() {
 
 
 
+  // Show all products in the products table (including sold items)
   const filteredProducts = products.filter(
     (product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

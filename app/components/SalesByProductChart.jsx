@@ -1,6 +1,6 @@
 "use client";
 
-import data from "../data/products.json";
+
 import {
   BarChart,
   Bar,
@@ -9,20 +9,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useSelector } from "react-redux";
 
 export default function SalesByProductChart() {
-  const salesData = data.Sales || [];
-
-  // Group sales by product
-  const chartData = Object.values(
-    salesData.reduce((acc, sale) => {
-      if (!acc[sale.product]) {
-        acc[sale.product] = { product: sale.product, quantity: 0 };
-      }
-      acc[sale.product].quantity += sale.quantity;
-      return acc;
-    }, {})
-  );
+  // Build chart data from Redux products that have `sold > 0`
+  const products = useSelector((state) => state.products.items || []);
+  const soldProducts = products.filter((p) => Number(p.sold || 0) > 0);
+  const chartData = soldProducts.map((p) => ({ product: p.name, quantity: Number(p.sold || 0) }));
 
   if (chartData.length === 0) {
     return (
@@ -65,7 +58,7 @@ export default function SalesByProductChart() {
       
       <div className="mt-4 text-sm text-gray-500 flex justify-between">
         <p>Products: {chartData.length}</p>
-        <p>Total Sales: {salesData.reduce((sum, sale) => sum + sale.quantity, 0)} units</p>
+        <p>Total Sales: {chartData.reduce((sum, item) => sum + Number(item.quantity || 0), 0)} units</p>
       </div>
     </div>
   );

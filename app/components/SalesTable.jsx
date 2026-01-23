@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { FaFilter } from "react-icons/fa";
-import data from "../data/products.json";
+import { useSelector } from "react-redux";
 
 export default function SalesTable() {
-  const salesList = data.Sales || [];
+  // Use products from Redux and filter sold > 0
+  const products = useSelector((state) => state.products.items || []);
+  const salesList = products.filter((p) => Number(p.sold || 0) > 0);
   const [filterCategory, setFilterCategory] = useState("all");
 
   // Get unique categories
@@ -62,17 +64,17 @@ export default function SalesTable() {
           <tbody>
             {filteredSales.map((sale, index) => (
               <tr key={index} className="border-t hover:bg-gray-50">
-                <td className="p-3">{sale.product}</td>
+                <td className="p-3">{sale.name}</td>
                 <td className="p-3">{sale.category}</td>
                 <td className="p-3">
                   <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
-                    {sale.quantity}
+                    {sale.sold}
                   </span>
                 </td>
                 <td className="p-3 font-medium text-green-600">
                   ${sale.price}
                 </td>
-                <td className="p-3 text-gray-500">{sale.date}</td>
+                <td className="p-3 text-gray-500">{sale.createdAt ? new Date(sale.createdAt).toLocaleDateString() : '-'}</td>
               </tr>
             ))}
           </tbody>
@@ -85,17 +87,17 @@ export default function SalesTable() {
           <div key={index} className="border rounded-lg p-4 bg-white">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-medium">{sale.product}</h3>
+                <h3 className="font-medium">{sale.name}</h3>
                 <p className="text-sm text-gray-500">{sale.category}</p>
               </div>
               <div className="text-right">
                 <div className="font-bold text-green-600">${sale.price}</div>
-                <div className="text-sm text-gray-500">{sale.date}</div>
+                <div className="text-sm text-gray-500">{sale.createdAt ? new Date(sale.createdAt).toLocaleDateString() : '-'}</div>
               </div>
             </div>
             <div className="mt-3">
               <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                Quantity: {sale.quantity}
+                Quantity: {sale.sold}
               </span>
             </div>
           </div>

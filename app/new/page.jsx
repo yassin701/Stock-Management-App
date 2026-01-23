@@ -14,8 +14,10 @@ export default function AddProductPage() {
     category: "",
     price: "",
     quantity: "",
+    sold: "",
     status: "in_stock",
     description: "",
+    createdAt: new Date().toISOString(),
   });
 
   const handleChange = (e) => {
@@ -30,6 +32,7 @@ export default function AddProductPage() {
       ...formData,
       price: Number(formData.price),
       quantity: Number(formData.quantity),
+      sold: Number(formData.sold || 0),
     };
 
     await dispatch(addProduct(product));
@@ -39,6 +42,7 @@ export default function AddProductPage() {
       category: "", 
       price: "", 
       quantity: "", 
+      sold: "",
       status: "in_stock", 
       description: "" 
     });
@@ -74,6 +78,19 @@ export default function AddProductPage() {
               value={formData.category}
               onChange={handleChange}
               placeholder="e.g., Electronics, Clothing"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-2">Sold</label>
+            <input
+              type="number"
+              name="sold"
+              value={formData.sold}
+              onChange={handleChange}
+              placeholder="0"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
