@@ -5,21 +5,43 @@ export async function POST(req) {
   try {
     const { sales } = await req.json();
 
-    // 1. Initialize with your secure key
+    // 1. Calculate metrics manually to ensure accuracy (AI can struggle with math/low-quality data)
+    const totalRevenue = sales.reduce((acc, item) => acc + ((item.price || 0) * (item.sold || 0)), 0);
+
+    // Find best seller safely
+    const bestSeller = sales.length > 0
+      ? sales.reduce((max, item) => (item.sold > (max?.sold || 0) ? item : max), sales[0])
+      : null;
+
+    // 2. Format the known data
+    const summaryData = `
+    - Total Revenue: ${totalRevenue}€
+    - Best Selling: ${bestSeller ? `${bestSeller.name} (${bestSeller.sold} units)` : 'None'}
+    `;
+
+    // 3. Initialize AI
     const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
-
-    // 2. Use the "latest" alias to avoid version-specific 404s
     const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
-const prompt = `
-Analyze this sales data: ${JSON.stringify(sales)}.
 
-Return short bullet points:
-- Total revenue
-- Best-selling product (BY QUANTITY SOLD)
-- One business tip
+    // 4. Ask AI ONLY for the qualitative insight, feeding it the hard numbers
+    const prompt = `
+    You are an expert sales analyst. 
+    
+    DATA CONTEXT:
+    ${summaryData}
+    
+    RAW SALES DATA:
+    ${JSON.stringify(sales)}
 
-Max 4–5 lines. No paragraphs.
-`;
+    YOUR TASK:
+    Generate a concise sales summary in this EXACT format (do not calculate revenue yourself, use the provided value):
+
+    - Total Revenue: ${totalRevenue}€
+    - Best-selling product: ${bestSeller ? bestSeller.name : "None"}
+    - Strategic Insight: [Provide one high-impact actionable recommendation based on the data. Focus on inventory turnover, pricing opportunities, or stock level warnings. Max 1 sentence.]
+
+    Do not use Markdown headers. Keep it clean and professional.
+    `;
 
 
 

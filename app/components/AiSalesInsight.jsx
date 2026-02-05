@@ -14,6 +14,9 @@ export default function AiSalesInsight() {
   const soldProducts = products.filter((p) => Number(p.sold || 0) > 0);
 
   useEffect(() => {
+    // wait for data to be available
+    if (soldProducts.length === 0) return;
+
     // Send only sold products for AI analysis
     setLoading(true);
     setError(null);
@@ -37,9 +40,9 @@ export default function AiSalesInsight() {
         setText("AI analysis unavailable.");
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [soldProducts.length]);
 
-  
+
   return (
     <div className="bg-white p-6 rounded-xl shadow h-full">
       <div className="flex items-center gap-3 mb-4">
@@ -51,7 +54,7 @@ export default function AiSalesInsight() {
           {loading ? 'Analyzing...' : 'Live'}
         </span>
       </div>
-      
+
       <hr className="mb-4 border-gray-200" />
 
       <div className="h-64 md:h-72 overflow-y-auto p-2">
@@ -104,11 +107,11 @@ export default function AiSalesInsight() {
           </>
         )}
       </div>
-      
+
       <div className="mt-4 text-xs text-gray-500 border-t pt-3">
-            <p>AI analysis based on {soldProducts.length} sales records</p>
-            <p className="mt-1">Updated in real-time as new data arrives</p>
-          </div>
+        <p>AI analysis based on {soldProducts.length} sales records</p>
+        <p className="mt-1">Updated in real-time as new data arrives</p>
+      </div>
     </div>
   );
 }

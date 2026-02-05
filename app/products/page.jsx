@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 import { fetchProducts } from "../Store/ProductsSlice";
 import Header from "../components/Header"
 import ProductsTable from "../components/ProductsTable";
@@ -36,28 +37,28 @@ export default function ProductsPage() {
 
   return (
     <div className="p-6">
-      <Header 
-        title="Products" 
+      <Header
+        title="Products"
         subtitle={`Manage your inventory (${filteredProducts.length} products)`}
         actionButton={
-          <a 
-            href="/new" 
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+          <Link
+            href="/new"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm font-medium"
           >
-            + Add Product
-          </a>
+            <span>+</span> Add
+          </Link>
         }
       >
-        <SearchBar 
-          value={searchTerm} 
-          onChange={setSearchTerm} 
-          placeholder="Search products..." 
+        <SearchBar
+          value={searchTerm}
+          onChange={setSearchTerm}
+          placeholder="Search products..."
         />
       </Header>
 
-      <ProductsTable 
-        products={filteredProducts} 
-        totalProducts={products.length} 
+      <ProductsTable
+        products={filteredProducts}
+        totalProducts={products.length}
       />
     </div>
   );
