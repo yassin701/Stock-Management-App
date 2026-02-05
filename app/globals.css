@@ -1,2 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+    --font-sans: "Inter", system-ui, sans-serif;
+    --color-primary-50: #eef2ff;
+    --color-primary-100: #e0e7ff;
+    --color-primary-500: #6366f1;
+    --color-primary-600: #4f46e5;
+    --color-primary-700: #4338ca;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-gray-50);
+        color: var(--color-gray-800);
+        font-family: var(--font-sans);
+    }
+}
+
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors;
+    }
+
+    .btn-primary {
+        @apply bg-blue-600 text-white hover:bg-blue-700;
+    }
+
+    .card {
+        @apply bg-white border border-gray-100 rounded-xl shadow-sm;
+    }
+
+    .card-header {
+        @apply px-6 py-4 border-b border-gray-100 flex items-center justify-between;
+    }
+
+    .card-body {
+        @apply p-6;
+    }
+
+    .badge {
+        @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold;
+    }
+
+    .badge-success {
+        @apply bg-green-100 text-green-800;
+        /* Fallback for safe compile */
+    }
+
+    .badge-warning {
+        @apply bg-yellow-100 text-yellow-800;
+    }
+
+    .badge-danger {
+        @apply bg-red-100 text-red-800;
+    }
+}

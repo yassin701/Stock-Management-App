@@ -43,7 +43,7 @@ export default function ProductsPage() {
         actionButton={
           <Link
             href="/new"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm font-medium"
+            className="btn btn-primary"
           >
             <span>+</span> Add
           </Link>

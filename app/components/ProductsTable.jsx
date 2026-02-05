@@ -15,10 +15,10 @@ export default function ProductsTable({ products, totalProducts }) {
   const [showEdit, setShowEdit] = useState(false);
 
   const getStatusColor = (status) => {
-    if (status === "in_stock") return "bg-green-100 text-green-800";
-    if (status === "low_stock") return "bg-yellow-100 text-yellow-800";
-    if (status === "out_of_stock") return "bg-red-100 text-red-800";
-    return "bg-gray-100 text-gray-800";
+    if (status === "in_stock") return "badge badge-success";
+    if (status === "low_stock") return "badge badge-warning";
+    if (status === "out_of_stock") return "badge badge-danger";
+    return "badge bg-gray-100 text-gray-800";
   };
 
   return (
@@ -26,9 +26,9 @@ export default function ProductsTable({ products, totalProducts }) {
       {/* Mobile Cards Layout */}
       <div className="md:hidden space-y-3">
         {products.map((product) => (
-          <div 
-            key={product.id} 
-            className="bg-white p-4 rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+          <div
+            key={product.id}
+            className="card p-4"
           >
             <div className="flex justify-between items-start mb-3">
               <div>
@@ -46,26 +46,26 @@ export default function ProductsTable({ products, totalProducts }) {
                 <span className="font-medium">{product.quantity}</span>
                 <span className="text-sm text-gray-500 ml-1">in stock</span>
               </div>
-              
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(product.status)}`}>
+
+              <span className={getStatusColor(product.status)}>
                 {(product.status || "").replace("_", " ")}
               </span>
             </div>
 
             <div className="flex justify-end gap-4 mt-4 pt-3 border-t">
-              <Link 
+              <Link
                 href={`/products/${product.id}`}
                 className="p-2 hover:bg-blue-50 rounded transition-colors"
               >
                 <FiEye className="text-blue-500 text-lg" />
               </Link>
-              <button 
+              <button
                 onClick={() => { setSelectedProduct(product); setShowEdit(true); }}
                 className="p-2 hover:bg-orange-50 rounded transition-colors"
               >
                 <FiEdit className="text-orange-500 text-lg" />
               </button>
-              <button 
+              <button
                 onClick={() => { setSelectedProduct(product); setShowDelete(true); }}
                 className="p-2 hover:bg-red-50 rounded transition-colors"
               >
@@ -77,7 +77,7 @@ export default function ProductsTable({ products, totalProducts }) {
       </div>
 
       {/* Desktop Table Layout */}
-      <div className="hidden md:block overflow-hidden rounded-lg border shadow-sm">
+      <div className="card hidden md:block overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
@@ -115,27 +115,27 @@ export default function ProductsTable({ products, totalProducts }) {
                     <div className="font-medium">{product.quantity}</div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(product.status)}`}>
+                    <span className={getStatusColor(product.status)}>
                       {(product.status || "").replace("_", " ")}
                     </span>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex gap-3">
-                      <Link 
+                      <Link
                         href={`/products/${product.id}`}
                         className="p-2 hover:bg-blue-50 rounded transition-colors"
                         title="View"
                       >
                         <FiEye className="text-blue-500" />
                       </Link>
-                      <button 
+                      <button
                         onClick={() => { setSelectedProduct(product); setShowEdit(true); }}
                         className="p-2 hover:bg-orange-50 rounded transition-colors"
                         title="Edit"
                       >
                         <FiEdit className="text-orange-500" />
                       </button>
-                      <button 
+                      <button
                         onClick={() => { setSelectedProduct(product); setShowDelete(true); }}
                         className="p-2 hover:bg-red-50 rounded transition-colors"
                         title="Delete"

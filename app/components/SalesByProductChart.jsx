@@ -19,43 +19,43 @@ export default function SalesByProductChart() {
 
   if (chartData.length === 0) {
     return (
-      <div className="bg-white p-5 rounded-xl shadow text-center text-gray-500">
+      <div className="card card-body text-center text-gray-500">
         No sales data to display
       </div>
     );
   }
 
   return (
-    <div className="bg-white p-5 rounded-xl shadow">
+    <div className="card card-body">
       <h2 className="text-lg font-semibold mb-4 text-gray-800">Sales by Product</h2>
-      
+
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={chartData}>
-            <XAxis 
-              dataKey="product" 
+            <XAxis
+              dataKey="product"
               fontSize={12}
             />
-            <YAxis 
+            <YAxis
               fontSize={12}
             />
-            <Tooltip 
-              contentStyle={{ 
+            <Tooltip
+              contentStyle={{
                 backgroundColor: 'white',
                 border: '1px solid #e5e7eb',
                 borderRadius: '0.375rem',
                 fontSize: '12px'
               }}
             />
-            <Bar 
-              dataKey="quantity" 
-              fill="#baccc7"
+            <Bar
+              dataKey="quantity"
+              fill="#6366f1"
               radius={[4, 4, 0, 0]}
             />
           </BarChart>
         </ResponsiveContainer>
       </div>
-      
+
       <div className="mt-4 text-sm text-gray-500 flex justify-between">
         <p>Products: {chartData.length}</p>
         <p>Total Sales: {chartData.reduce((sum, item) => sum + Number(item.quantity || 0), 0)} units</p>
